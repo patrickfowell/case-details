@@ -1,0 +1,30 @@
+{
+  "name": "case-details-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/case-details-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/case-details-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "case-details:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "case-details:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "case-details:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "implicitDependencies": ["case-details"],
+  "tags": []
+}
