@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "nx run case-details:build --buildLibsFromSource",
-    "predeploy": "npm run build -- --prod --baseHref=/case-details/",
+    "predeploy": "npm run build -- --prod --base=/case-details/",
     "deploy": "gh-pages -d dist/apps/case-details"
   },
   "private": true,
