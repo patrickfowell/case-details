@@ -29,7 +29,7 @@ const defaultCaseData: CaseData = {
   respondent: '',
   soleClaiment: false,
   dateOfReceipt: '',
-  JurisdictionCodeList: []
+  jurisdictionCodeList: []
 } 
 
 const parseInput = (data: string) => {
@@ -67,9 +67,10 @@ const parseCase = (data: Case) => {
     respondent: '',
     soleClaiment: false,
     dateOfReceipt: '',
-    JurisdictionCodeList: []
+    jurisdictionCodeList: []
   };
   try {
+    // claimant details
     console.log(data);
     console.log(data.tabs);
     console.log(data.tabs.filter((tab) => tab.id));
@@ -86,6 +87,17 @@ const parseCase = (data: Case) => {
       employedTo: caseClaimantSecondaryDetails.claimant_employed_to,
       employedCurrently: caseClaimantSecondaryDetails.claimant_employed_currently
     }
+
+    // CaseOverview
+    const caseOverviewDetails: Field[] = data.tabs.filter((tab) => tab.id == "CaseOverview")[0].fields;
+    parsedCase.respondent = caseOverviewDetails.filter(fields => fields.id == "respondent")[0].value;
+    parsedCase.soleClaiment = caseOverviewDetails.filter(fields => fields.id == "caseType")[0].value.toLowerCase() == "single";
+    parsedCase.dateOfReceipt = caseOverviewDetails.filter(fields => fields.id == "receiptDate")[0].value;
+
+    // juristiction
+    const caseJuristictionDetails: Field[] = data.tabs.filter((tab) => tab.id == "CaseOverview")[0].fields;
+    parsedCase.jurisdictionCodeList = caseOverviewDetails.filter(fields => fields.id == "jurCodesCollection")[0].value.filter((juristiction: any) => juristiction.value.jurisdictionCodeList);
+
   } catch (e) {
     console.log("Handle error", e);
   }

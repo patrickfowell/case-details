@@ -63,5 +63,5 @@ export interface CaseData {
 	respondent: string;
 	soleClaiment: boolean;
 	dateOfReceipt: string;
-    JurisdictionCodeList: string[];
+    jurisdictionCodeList: string[];
 }
